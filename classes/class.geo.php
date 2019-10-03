@@ -13,14 +13,14 @@ public function getYandex($lat, $lon) {
 
 	// Получаем данные из БД
 	// ============================
-	$this->geoData[$lonA.",".$latA] = $db->getData($latA, $lonA);
+	$this->geoData[$lonA.",".$latA] = $this->db->getData($latA, $lonA);
 
 	if (!isset($this->geoData[$lonA.",".$latA]) AND
 			$this->geoData[$lonA.",".$latA]!=NULL
 	) {
 	
 		$url = "https://geocode-maps.yandex.ru/1.x/";
-		$apikey = require('apikey.php');
+		$apikey = require('../config/apikey.php');
 
 		$json = array(
 		  'geocode' => $lon.",".$lat,

@@ -2,7 +2,7 @@
 
 class Files {
 
-	public $db, $geo;
+	public $db, $geo, $config;
 
 	public function getDirContents($dir, &$results = array()){
 	    $files = scandir($dir);
@@ -36,10 +36,11 @@ class Files {
 			return true;
 	}
 
-	public function moveImageFile($filename, $db, $geo) {
+	public function moveImageFile($filename, $db, $geo, $config) {
 
-		$this->db  = $db;
-		$this->geo = $geo;
+		$this->db  		= $db;
+		$this->geo 		= $geo;
+		$this->config = $config;
 
 		if (is_dir($filename)) {
 			echo "It's dir ".$filename."<br>";
@@ -61,7 +62,7 @@ class Files {
 			$dt = new DateTime();
 			$dt->setTimestamp(filectime($filename));
 
-			$start_path = "D:\photos\\video_by_date";
+			$start_path = $this->config['video'];
 			$is_exif = false;
 
 		} else if (
@@ -73,7 +74,7 @@ class Files {
 			$dt = new DateTime();
 			$dt->setTimestamp(filectime($filename));
 
-			$start_path = "D:\photos\photos_tiff";
+			$start_path = $this->config['photos.raw'];
 			$is_exif = false;
 
 
@@ -85,14 +86,14 @@ class Files {
 			$dt = new DateTime();
 			$dt->setTimestamp(filectime($filename));
 
-			$start_path = "D:\photos\photos_without_exif";
+			$start_path = $this->config['photos.no.exif'];
 			$is_exif = false;
 		
 
 		} else {
 
 			$dt = DateTime::createFromFormat('Y:m:d H:i:s', $exif['DateTime']);	
-			$start_path = "D:\photos\photos_with_exif";
+			$start_path = $this->config['photos.exif'];
 			$is_exif = true;	
 			$suffix = $geo->getGeo($exif, $this->db);
 
