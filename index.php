@@ -9,6 +9,11 @@ public $geoData = array();
 public $db;
 public $count;
 
+public function __construct() {
+
+}
+
+
 public function connect() {
 	$this->db = new mysqli("127.0.0.1", "root", "", "geo") or 
 		die("Connect failed: %s\n". $this->db->error);
@@ -47,11 +52,12 @@ public function getYandex($lat, $lon) {
 	if (!isset($this->geoData[$lonA.",".$latA])) {
 	
 		$url = "https://geocode-maps.yandex.ru/1.x/";
+		$apikey = require('apikey.php');
 
 		$json = array(
 		  'geocode' => $lon.",".$lat,
 		  'kind' => 'locality',
-		  'apikey' => '6c662b20-2417-48cf-9cd3-d7434c73aa7c',
+		  'apikey' => $apikey,
 		  'results' =>'1',
 		  'skip' => '0',
 		  'format' => 'json'
