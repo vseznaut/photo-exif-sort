@@ -1,1 +1,0 @@
-<?php	return "your-api-key-here"; ?>
