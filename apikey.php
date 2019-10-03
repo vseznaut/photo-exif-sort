@@ -1,1 +1,1 @@
-<?php	return "6c662b20-2417-48cf-9cd3-d7434c73aa7c"; ?>
+<?php	return "your-yandex-api-key-here"; ?>
