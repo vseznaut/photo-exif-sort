@@ -51,16 +51,27 @@ class Files {
 		$path_parts = pathinfo($filename);
 		unset($suffix);
 
+		//print_r($path_parts);exit;
+
 		// Если нет EXIF
 		// =================================================
 		if (
-				($path_parts['extension']=='mov') OR
-			  ($path_parts['extension']=='mp4') OR
-			  ($path_parts['extension']=='avi')
+				(strtolower($path_parts['extension'])=='mov') OR
+			  (strtolower($path_parts['extension'])=='mp4') OR
+			  (strtolower($path_parts['extension'])=='mts') OR
+			  (strtolower($path_parts['extension'])=='mpg') OR
+			  (strtolower($path_parts['extension'])=='m4v') OR
+				(strtolower($path_parts['extension'])=='m2t') OR			  
+				(strtolower($path_parts['extension'])=='vob') OR			  				
+				(strtolower($path_parts['extension'])=='lrv') OR			  								
+				(strtolower($path_parts['extension'])=='3gp') OR			  										
+				(strtolower($path_parts['extension'])=='wav') OR			  										
+				(strtolower($path_parts['extension'])=='vob') OR			  										
+			  (strtolower($path_parts['extension'])=='avi') 				
 		) {
 			
 			$dt = new DateTime();
-			$dt->setTimestamp(filectime($filename));
+			$dt->setTimestamp(filemtime($filename));
 
 			$start_path = $this->config['video'];
 			$is_exif = false;
@@ -72,7 +83,7 @@ class Files {
 		) {
 			
 			$dt = new DateTime();
-			$dt->setTimestamp(filectime($filename));
+			$dt->setTimestamp(filemtime($filename));
 
 			$start_path = $this->config['photos.raw'];
 			$is_exif = false;
@@ -84,7 +95,7 @@ class Files {
 		) {
 
 			$dt = new DateTime();
-			$dt->setTimestamp(filectime($filename));
+			$dt->setTimestamp(filemtime($filename));
 
 			$start_path = $this->config['photos.no.exif'];
 			$is_exif = false;
@@ -108,6 +119,10 @@ class Files {
 			exit;
 		}
 		// =================================================
+		//print_r($filename);
+		//print_r(filemtime($filename));
+		//print_r($dt);
+		//exit;
 
 		$year = $start_path."\Year".$dt->format('Y');
 		if (!is_dir($year)) mkdir($year);
